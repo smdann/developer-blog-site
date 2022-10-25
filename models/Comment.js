@@ -1,9 +1,10 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class Dashboard extends Model {}
+class Comment extends Model {}
 
-Dashboard.init(
+// Define columns
+Comment.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -11,16 +12,28 @@ Dashboard.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    name: {
+    author_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
+    },
+    post_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Post',
+        key: 'id'
+      }
+    },
+    date_created: {
+      type: DataTypes.DATE,
+      allowNull: false,
+    },
+    content: {
       type: DataTypes.STRING,
-      allowNull: false,
-    },
-    starting_date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-    },
-    ending_date: {
-      type: DataTypes.DATE,
       allowNull: false,
     },
   },
@@ -28,8 +41,8 @@ Dashboard.init(
     sequelize,
     freezeTableName: true,
     underscored: true,
-    modelName: 'Dashboard',
+    modelName: 'Comment',
   }
 );
 
-module.exports = Dashboard;
+module.exports = Comment;

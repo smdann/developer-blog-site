@@ -1,13 +1,32 @@
-const User = require('./User');
-const Dashboard = require('./Dashboard');
+const Comment = require('./Comment');
 const Post = require('./Post');
+const User = require('./User');
 
-Dashboard.hasMany(Post, {
-  foreignKey: 'gallery_id',
+// Relationships between models
+Comment.belongsTo(User, {
+  foreignKey: 'user_id'
 });
 
-Post.belongsTo(Dashboard, {
-  foreignKey: 'gallery_id',
+Comment.belongsTo(Post, {
+  foreignKey: 'post_id'
 });
 
-module.exports = { User, Dashboard, Post };
+Post.hasMany(Comment, {
+  foreignKey: 'post_id'
+});
+
+Post.belongsTo(User, {
+  foreignKey: 'user_id'
+});
+
+User.hasMany(Post, {
+  foreignKey: 'user_id'
+});
+
+User.hasMany(Comment, {
+  foreignKey: 'user_id'
+});
+
+
+
+module.exports = { Comment, Post, User };

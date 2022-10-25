@@ -3,6 +3,7 @@ const sequelize = require('../config/connection');
 
 class Post extends Model {}
 
+// Define columns
 Post.init(
   {
     id: {
@@ -15,25 +16,22 @@ Post.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    author: {
-      type: DataTypes.STRING,
+    author_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
     },
     date_created: {
       type: DataTypes.DATE,
       allowNull: false,
     },
     contents: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
-    // gallery_id: {
-    //   type: DataTypes.INTEGER,
-    //   references: {
-    //     model: 'gallery',
-    //     key: 'id',
-    //   },
-    // },
   },
   {
     sequelize,
