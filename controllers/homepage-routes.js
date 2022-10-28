@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     })
     const dbPostData = allPosts.map((post) => post.get({plain: true}))
     console.log(dbPostData, req.session.user_id);
-    res.render('homepage', {dbPostData, user_id: req.session.user_id})
+    res.render('homepage', {dbPostData, loggedIn: req.session.loggedIn})
   } catch (err) {
     console.log(err);
     res.status(500).json(err);

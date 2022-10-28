@@ -19,6 +19,12 @@ const postData = [
     date_created: 'March 30, 2018',
     content: "I have really loved learning about ORMs. It's really simplified the way I create queries in SQL!",
   },
+  {
+    title: 'Obiect-Relational Mapping',
+    user_id: 4,
+    date_created: 'March 30, 2018',
+    content: "I have really loved learning about ORMs. It's really simplified the way I create queries in SQL!",
+  },
   
 ];
 

@@ -4,20 +4,15 @@ const { User, Post, Comment } = require('../../models');
 // Create a new user (sign up)
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create({
-      email: req.body.email,
-      password: req.body.password,
-    });
+    const userData = await User.create(req.body);
 
     req.session.save(() => {
       req.session.user_id = userData.id;
-      req.session.email = userData.email;
       req.session.loggedIn = true;
 
       res.status(200).json(userData);
     });
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
@@ -25,12 +20,15 @@ router.post('/', async (req, res) => {
 // Create a new login (login)
 router.post('/login', (req, res) => {
     console.log("from login", req.body)
+    console.log(req.body.email, '***********************')
+    console.log(req.body.password, '***********************')
     User.findOne({
       where: {
         email: req.body.email,
+        
       },
     }) .then(userData => {
-      console.log(userData)
+      console.log(!userData)
       if (!userData) {
         res.status(400).json({ message: 'No account found with the email you provided. Please sign up.' });
         return;
@@ -46,7 +44,7 @@ router.post('/login', (req, res) => {
       }
       req.session.save(() => {
         req.session.user_id = userData.id;
-        req.session.email = userData.email;
+        // req.session.email = userData.email;
         req.session.loggedIn = true;
 
         res.json({user: userData, message: 'You are now logged in.'});

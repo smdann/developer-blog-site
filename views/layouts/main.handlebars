@@ -14,31 +14,40 @@
 <body>
   <div class="jumbotron">
     <h1 class="display-4 text-center">Tech Blog</h1>
-    <p class="lead text-center">Bringing developers together to share their knowledge with the world!</p>
-  
-    <nav class="text-center">
-      <a href="/">Homepage</a>
+    <p class="lead text-center">Bringing developers together to share their knowledge with the world!
+    </p>
+  </div>
+  <!-- Navbar content -->
+  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+    <a href="/">Homepage</a>
       <a href="/dashboard">Dashboard</a>
       <!-- Conditionally render login or logout links -->
       {{#if logged_in}}
       <a href="/profile">Profile</a> |
-      <button class="no-button" id="logout">Logout</button>
+      
       {{else}}
-      <a href="/login">Login</a>
       <a href="/signup">Sign Up</a>
+      <a href="/login">Login</a>
+      <a href="" id="logout">Logout</a>
+      
       {{/if}}
-    </nav>
-  </div>
+  </nav>
   
-  <main class="container container-fluid">
-    <!-- Render the sub layout -->
-    {{{ body }}}
+  
+  <main class="container">
+    <div class="row">
+      <div class="col-12 mt-5">
+        <!-- Render the sub layout -->
+        {{{ body }}}
+      </div>
+    </div>
   </main>
 
   <footer>
     <!-- Render script for logged in users only -->
+    <script src="/js/logout.js"></script>
     {{#if logged_in}}
-    <script src="../../public/js/logout.js"></script>
+    
     {{/if}}
   </footer>
 </body>
