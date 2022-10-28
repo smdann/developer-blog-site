@@ -1,28 +1,32 @@
-const { Dashboard } = require('../models');
+const { Comment } = require('../models');
 
-const dashboardData = [
+const commentData = [
   {
-    name: 'Printemps',
-    starting_date: 'April 20, 2021 07:00:00',
-    ending_date: 'June 21, 2021 17:00:00',
+    user_id: 1,
+    post_id: 2,
+    date_created: 'June 21, 2022 17:00:00',
+    content: 'Great article.',
   },
   {
-    name: 'Sommer',
-    starting_date: 'June 22, 2021 09:00:00',
-    ending_date: 'September 22, 2021 22:00:00',
+    user_id: 2,
+    post_id: 3,
+    date_created: 'August 22, 2022 17:00:00',
+    content: 'Thank you for sharing!',
   },
   {
-    name: 'Herfst',
-    starting_date: 'September 23, 2021 08:30:00',
-    ending_date: 'December 21, 2021 20:30:00',
+    user_id: 3,
+    post_id: 4,
+    date_created: 'September 23, 2022 17:00:00',
+    content: 'This was very informative.',
   },
   {
-    name: 'Invierno',
-    starting_date: 'December 22, 2020 11:00:00',
-    ending_date: 'March 19, 2021 19:00:00',
+    user_id: 4,
+    post_id: 1,
+    date_created: 'October 24, 2022 17:00:00',
+    content: 'This helped me learn a lot about the topic.',
   },
 ];
 
-const seedDashboard = () => Dashboard.bulkCreate(dashboardData);
+const seedComments = () => Comment.bulkCreate(commentData);
 
-module.exports = seedDashboard;
+module.exports = seedComments;

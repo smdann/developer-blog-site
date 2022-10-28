@@ -1,0 +1,24 @@
+{{!-- display all of user's posts
+have a button to create a new post and a button to edit existing posts
+edit button will be connected to the post id --}}
+
+{{#each posts as |post| }}
+<div class="row mb-4 project">
+  <div class="col-md-5">
+    <h2>
+      {{post.title}}
+    </h2>
+    <p>
+      {{post.date_created}}
+      </p>
+    <p>
+      {{post.content}}
+    </p>
+  </div>
+  <div class="col-md-7">
+    <div>
+      <a href="/dashboard/edit/{{post.id}}"><button class=""></button></a>
+    </div>
+  </div>
+</div>
+{{/each}}

@@ -1,13 +1,17 @@
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 
-// Create a new user
+// Create a new user (sign up)
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
+    const userData = await User.create({
+      email: req.body.email,
+      password: req.body.password,
+    });
 
     req.session.save(() => {
       req.session.user_id = userData.id;
+      req.session.email = userData.email;
       req.session.loggedIn = true;
 
       res.status(200).json(userData);
@@ -18,45 +22,77 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Login
-router.post('/login', async (req, res) => {
-  try {
-    const userData = await User.findOne({
+// Create a new login (login)
+router.post('/login', (req, res) => {
+    console.log("from login", req.body)
+    User.findOne({
       where: {
         email: req.body.email,
       },
+    }) .then(userData => {
+      console.log(userData)
+      if (!userData) {
+        res.status(400).json({ message: 'No account found with the email you provided. Please sign up.' });
+        return;
+      }
+      const validPassword = userData.checkPassword(req.body.password);
+      console.log(validPassword)
+      console.log(userData)
+      console.log(req.body.password)
+
+      if(!validPassword) {
+        res.status(400).json({ message: 'No account found with the email you provided. Please sign up.' });
+        return;
+      }
+      req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.email = userData.email;
+        req.session.loggedIn = true;
+
+        res.json({user: userData, message: 'You are now logged in.'});
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err)
     });
-
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: 'The email or password you entered is incorrect. Please try again.' });
-      return;
-    }
-
-    const validPassword = await userData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: 'The email or password you entered is incorrect. Please try again.' });
-      return;
-    }
-
-    req.session.save(() => {
-      req.session.loggedIn = true;
-
-      res
-        .status(200)
-        .json({ user: userData, message: 'You are now logged in.' });
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
+  });
 });
 
-// Logout
+//     console.log(userData, '@@')
+
+//     if (!userData) {
+//       res
+//         .status(400)
+//         .json({ message: 'No account found with the email you provided. Please sign up.' });
+//       return;
+//     }
+//     console.log(userData, '@@@')
+//     const validPassword = userData.checkPassword(req.body.password);
+//     console.log(validPassword, '@@@@@@@@@@@@')
+
+//     if (!validPassword) {
+//       console.log('password not validated')
+//       res
+//         .status(400)
+//         .json({ message: 'The password you entered is incorrect. Please try again.' });
+//       return;
+//     }
+
+//     req.session.save(() => {
+//       req.session.user_id = userData.id;
+//       req.session.email = userData.email;
+//       req.session.loggedIn = true;
+
+//       res.json(userData);
+//       console.log(userData, '***********************')
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
+
+// Create a new logout (logout)
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
