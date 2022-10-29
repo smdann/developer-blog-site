@@ -30,7 +30,7 @@ If you would like to run this application on your local machine, please use `npm
 
 * See the .envEXAMPLE file for the information needed to secure your connection to the database.
 
-Use `npm run watch` to start the server.
+* Use `npm run watch` to start the server.
 
 ## Usage 
 
@@ -49,6 +49,8 @@ Inside the dashboard, users can create and submit a new blog post.
 * Users that have previously created posts will see them displayed, along with options to edit or delete.
 
 Users also have the option to interact with the posts of other users by leaving comments. The ability to leave comments also requires the user to be logged in.
+
+[Developer Blog Site - Deployed Application]()
 
 ![Developer Blog Site Screenshot 1](./public/images/screenshot-1.png)
 ![Developer Blog Site Screenshot 2](./public/images/screenshot-2.png)
