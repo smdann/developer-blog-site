@@ -7,45 +7,26 @@ router.get('/', async (req, res) => {
     const allPosts = await Post.findAll({
       include: [User]
     })
+    // Serializes the data
     const dbPostData = allPosts.map((post) => post.get({plain: true}))
     console.log(dbPostData, req.session.user_id);
+    // Passes the serialized data into homepage.handlars
     res.render('homepage', {dbPostData, loggedIn: req.session.loggedIn})
   } catch (err) {
     console.log(err);
     res.status(500).json(err);
   }
 });
-// router.get('/', (req, res) => {
-//   Post.findAll({
-//     include: [
-//       {
-//         model: Comment,
-//         attributes: ['date_created', 'content'],
-//       },
-//     ],
-// })
-//   .then(dbPostData => {
-//     const posts = dbPostData.map(post => post.get({ plain: true }));
-
-//     res.render('homepage', {
-//       posts,
-//     });
-//   })
-//   .catch(err => {
-//     console.log(err);
-//     res.status(500).json(err);
-//   });
-// });
-
 
 // GET one post
 router.get('/posts/:id', async (req, res) => {
   try {
-    const singlePost = Post.findByPk(req.params.id, 
-      {
+    const singlePost = Post.findByPk(req.params.id, {
+      // Include User and Comment models
       include: [{model: User, attributes: {exclude: 'password'}},
       {model: Comment, include: [{model: User, attributes: {exclude: 'password'}}]}]
     })
+    // Render singlePost.handlebars
     if (singlePost) {
       const post = (await singlePost).get({plain: true})
       return res.render('singlePost', {post, user_id: req.session.user_id})
@@ -59,56 +40,23 @@ router.get('/posts/:id', async (req, res) => {
   }
 });
 
-// router.get('/posts/:id', (req, res) => {
-//   Post.findOne({where: {id: req.params.id}, 
-//       include: [
-//         {
-//           model: Comment,
-//           attributes: [
-//             'id',
-//             'user_id',
-//             'post_id',
-//             'date_created',
-//             'content',
-//           ],
-//         },
-//         {
-//           model: User,
-//           attributes: [
-//             'name',
-//           ],
-//         },
-//       ],
-//     })
-
-//     .then(dbPostData => {
-//       const posts = dbPostData.map(post => post.get({ plain: true }));
-  
-//       res.render('post', {
-//         posts,
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       res.status(500).json(err);
-//     });
-    
-    
-// });
-
 // Get Login
 router.get('/login', (req, res) => {
   if(req.session.loggedIn) {
+    // If already logged in, redirects to the dashboard
     res.redirect('/dashboard')
   }
+  // If not logged in, renders login.handlebars
   res.render('login')
 });
 
 // Get Sign-up
 router.get('/signup', (req, res) => {
+  // If already logged in, redirects to the dashboard
   if(req.session.loggedIn) {
     res.redirect('/dashboard')
   }
+  // If not logged in, renders signup.handlebars
   res.render('signup')
 });
 

@@ -20,8 +20,7 @@ router.post('/', async (req, res) => {
 // Create a new login (login)
 router.post('/login', (req, res) => {
     console.log("from login", req.body)
-    console.log(req.body.email, '***********************')
-    console.log(req.body.password, '***********************')
+    // Find user in db with email address matching the one entered
     User.findOne({
       where: {
         email: req.body.email,
@@ -33,18 +32,19 @@ router.post('/login', (req, res) => {
         res.status(400).json({ message: 'No account found with the email you provided. Please sign up.' });
         return;
       }
+      // Validate the password entered with the one in the db
       const validPassword = userData.checkPassword(req.body.password);
       console.log(validPassword)
       console.log(userData)
       console.log(req.body.password)
 
       if(!validPassword) {
-        res.status(400).json({ message: 'No account found with the email you provided. Please sign up.' });
+        res.status(400).json({ message: 'You entered an invalid passowrd. Please try again.' });
         return;
       }
+      // Session saved with user ID
       req.session.save(() => {
         req.session.user_id = userData.id;
-        // req.session.email = userData.email;
         req.session.loggedIn = true;
 
         res.json({user: userData, message: 'You are now logged in.'});
@@ -56,43 +56,10 @@ router.post('/login', (req, res) => {
   });
 });
 
-//     console.log(userData, '@@')
-
-//     if (!userData) {
-//       res
-//         .status(400)
-//         .json({ message: 'No account found with the email you provided. Please sign up.' });
-//       return;
-//     }
-//     console.log(userData, '@@@')
-//     const validPassword = userData.checkPassword(req.body.password);
-//     console.log(validPassword, '@@@@@@@@@@@@')
-
-//     if (!validPassword) {
-//       console.log('password not validated')
-//       res
-//         .status(400)
-//         .json({ message: 'The password you entered is incorrect. Please try again.' });
-//       return;
-//     }
-
-//     req.session.save(() => {
-//       req.session.user_id = userData.id;
-//       req.session.email = userData.email;
-//       req.session.loggedIn = true;
-
-//       res.json(userData);
-//       console.log(userData, '***********************')
-//     });
-//   } catch (err) {
-//     console.log(err);
-//     res.status(500).json(err);
-//   }
-// });
-
 // Create a new logout (logout)
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
+    // Destroys the user's session
     req.session.destroy(() => {
       res.status(204).end();
     });

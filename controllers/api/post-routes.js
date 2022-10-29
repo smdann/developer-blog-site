@@ -16,7 +16,7 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
-// Authorized user updates their post
+// Authorized user edits their post
 router.put('/:id', withAuth, async (req, res) => {
   try {
     const updatePost = await Post.update(req.body, {
@@ -29,7 +29,7 @@ router.put('/:id', withAuth, async (req, res) => {
 });
 
 // Authorized user deletes their post
-router.put('/:id', withAuth, async (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
   try {
     const deletePost = await Post.destroy({
       where: {id: req.params.id}

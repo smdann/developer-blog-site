@@ -2,6 +2,10 @@
 have a button to create a new post and a button to edit existing posts
 edit button will be connected to the post id --}}
 
+<section class="create-post text-center">
+  <button type="submit" class="btn" id="create-post">Create a Post</button>
+</section>
+
 {{#each posts as |post| }}
 <div class="row mb-4 project">
   <div class="col-md-5">
@@ -17,8 +21,10 @@ edit button will be connected to the post id --}}
   </div>
   <div class="col-md-7">
     <div>
-      <a href="/dashboard/edit/{{post.id}}"><button class=""></button></a>
+      <a href="/dashboard/edit/{{post.id}}"><button class="edit-post"></button>Edit Post</a>
     </div>
   </div>
 </div>
 {{/each}}
+
+<script src="/js/create-post.js"></script>
