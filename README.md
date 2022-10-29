@@ -20,7 +20,7 @@ The Developer Blog Site is a CMS-style blog site where developers publish releva
 
 ## Installation 
 
-Not required: application is deployed on Railway.
+Not required: application is deployed on Heroku.
 
 If you would like to run this application on your local machine, please use `npm i` to install all of the required packages found in the package.json file. 
 
