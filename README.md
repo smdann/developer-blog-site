@@ -50,7 +50,7 @@ Inside the dashboard, users can create and submit a new blog post.
 
 Users also have the option to interact with the posts of other users by leaving comments. The ability to leave comments also requires the user to be logged in.
 
-[Developer Blog Site - Deployed Application]()
+[Developer Blog Site - Deployed Application](https://enigmatic-savannah-78345.herokuapp.com/)
 
 ![Developer Blog Site Screenshot 1](./public/images/screenshot-1.png)
 ![Developer Blog Site Screenshot 2](./public/images/screenshot-2.png)
