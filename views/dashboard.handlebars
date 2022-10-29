@@ -1,21 +1,17 @@
-{{!-- display all of user's posts
-have a button to create a new post and a button to edit existing posts
-edit button will be connected to the post id --}}
-
-{{!-- <section class="create-post text-center">
-  <button type="submit" class="btn" id="create-post">Create a Post</button>
-</section> --}}
-
 <div class="card text-center">
   <h2>Create a New Post</h2>
   <form class="card-body" id="create-post">
     <input type="hidden" name="post-id" value="{{post.id}}"/>
     <div>
       <label class="form-label">Title:</label>
+    </div>
+    <div>
       <input class="form-input" type="text" name="post-title"/>
     </div>
     <div>
       <label class="form-label">Post Content:</label>
+    </div>
+    <div>
       <textarea class="form-input" type="textarea" name="post-content"></textarea>
     </div>
     <button class="btn btn-primary" type="submit">Submit</button>
@@ -29,18 +25,21 @@ edit button will be connected to the post id --}}
       {{post.title}}
     </h2>
     <p>
-      {{post.date_created}}
-      </p>
+      {{format_date post.date_created}}
+    </p>
     <p>
       {{post.content}}
     </p>
   </div>
   <div class="col-md-7">
     <div>
-      <a href="/dashboard/edit/{{post.id}}"><button class="edit-post"></button>Edit Post</a>
+      <a href="/dashboard/edit/{{post.id}}" class="edit-post">Edit Post</a>
+      <a href="/dashboard/edit/{{post.id}}" class="delete-post">Delete Post</a>
     </div>
   </div>
 </div>
 {{/each}}
 
 <script src="/js/create-post.js"></script>
+<script src="/js/edit-post.js"></script>
+<script src="/js/delete-post.js"></script>
