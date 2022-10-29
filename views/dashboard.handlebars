@@ -2,9 +2,25 @@
 have a button to create a new post and a button to edit existing posts
 edit button will be connected to the post id --}}
 
-<section class="create-post text-center">
+{{!-- <section class="create-post text-center">
   <button type="submit" class="btn" id="create-post">Create a Post</button>
-</section>
+</section> --}}
+
+<div class="card text-center">
+  <h2>Create a New Post</h2>
+  <form class="card-body" id="create-post">
+    <input type="hidden" name="post-id" value="{{post.id}}"/>
+    <div>
+      <label class="form-label">Title:</label>
+      <input class="form-input" type="text" name="post-title"/>
+    </div>
+    <div>
+      <label class="form-label">Post Content:</label>
+      <textarea class="form-input" type="textarea" name="post-content"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>
 
 {{#each posts as |post| }}
 <div class="row mb-4 project">
