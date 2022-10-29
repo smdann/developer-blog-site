@@ -26,7 +26,8 @@ router.post('/login', (req, res) => {
         email: req.body.email,
         
       },
-    }) .then(userData => {
+    }) 
+    .then(userData => {
       console.log(!userData)
       if (!userData) {
         res.status(400).json({ message: 'No account found with the email you provided. Please sign up.' });
@@ -34,9 +35,9 @@ router.post('/login', (req, res) => {
       }
       // Validate the password entered with the one in the db
       const validPassword = userData.checkPassword(req.body.password);
-      console.log(validPassword)
+      console.log("validpassword", validPassword)
       console.log(userData)
-      console.log(req.body.password)
+      //console.log(req.body.password)
 
       if(!validPassword) {
         res.status(400).json({ message: 'You entered an invalid passowrd. Please try again.' });
@@ -49,10 +50,10 @@ router.post('/login', (req, res) => {
 
         res.json({user: userData, message: 'You are now logged in.'});
     })
-    .catch(err => {
-      console.log(err);
-      res.status(500).json(err)
-    });
+    // .catch(err => {
+    //   console.log(err);
+    //   res.status(500).json(err)
+    // });
   });
 });
 

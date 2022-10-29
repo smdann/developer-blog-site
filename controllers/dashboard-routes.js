@@ -22,11 +22,11 @@ router.get('/', withAuth, (req, res) => {
       posts, loggedIn: true
     });
   })
-  .catch(err => {
-    console.log(err);
-    res.redirect('login')
-    res.status(500).json(err);
-  });
+  // .catch(err => {
+  //   console.log(err);
+  //   res.redirect('login')
+  //   res.status(500).json(err);
+  // });
 });
 
 // GET one post that belongs to the user (user_id matches session.user_id)
